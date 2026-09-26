@@ -1,4 +1,4 @@
-# DjkMonads
+# DJK Monads
 
 Rust-style `Result` and `Option` monads for Ruby.
 
