@@ -1,2 +1,4 @@
 ﻿bump:
   file: lib/djk/monads/version.rb
+release:
+  github: true
