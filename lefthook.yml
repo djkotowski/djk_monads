@@ -1,0 +1,9 @@
+pre-commit:
+  jobs:
+    - name: "format/lint ruby"
+      glob: "*.{rake,rb}"
+      exclude:
+        - "bin/**/*"
+      run: |
+        bin/stree write "{staged_files}"
+        bin/rubocop -a --force-exclusion -- {staged_files}
