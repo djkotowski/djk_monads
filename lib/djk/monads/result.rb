@@ -22,30 +22,35 @@ module DJK
       # @abstract
       # @param other [Object] the object to compare against
       # @return [Boolean] true if +other+ is a Result of the same variant wrapping an equal value
-      def ==(other); end
+      def ==(other)
+      end
 
       # Destructures the result for array patterns, exposing the wrapped value or error.
       #
       # @abstract
       # @return [Array] a single element array holding the value (Ok) or the error (Err)
-      def deconstruct; end
+      def deconstruct
+      end
 
       # Destructures the result for hash patterns.
       #
       # @abstract
       # @param keys [Array<Symbol>, nil] the keys requested by the pattern
       # @return [Hash] the wrapped value or error keyed by variant
-      def deconstruct_keys(keys); end
+      def deconstruct_keys(keys)
+      end
 
       # @abstract
       # @return [Boolean] true if the result is an Err
-      def err?; end
+      def err?
+      end
 
       # Collapses a result wrapping another result into a single result.
       #
       # @abstract
       # @return [Result] the innermost result, or +self+ when nothing is nested
-      def flatten; end
+      def flatten
+      end
 
       # Chains another result producing operation onto an Ok, passing through an Err untouched.
       #
@@ -53,7 +58,8 @@ module DJK
       # @yieldparam value [Object] the wrapped value, only for an Ok
       # @yieldreturn [Result] must return a Result
       # @return [Result] the result returned by the block, or +self+ when the receiver is an Err
-      def flat_map; end
+      def flat_map
+      end
 
       # Chains another result producing operation onto an Err, passing through an Ok untouched.
       #
@@ -61,75 +67,87 @@ module DJK
       # @yieldparam error [Object] the wrapped error, only for an Err
       # @yieldreturn [Result] must return a Result
       # @return [Result] the result returned by the block, or +self+ when the receiver is an Ok
-      def flat_map_err; end
+      def flat_map_err
+      end
 
       # @abstract
       # @return [String] a human readable representation of the result
-      def inspect; end
+      def inspect
+      end
 
       # Transforms the value of an Ok, passing through an Err untouched.
       #
       # @abstract
       # @yieldparam value [Object] the wrapped value, only for an Ok
       # @return [Result] an Ok wrapping the block's return value, or +self+ when the receiver is an Err
-      def map; end
+      def map
+      end
 
       # Transforms the error of an Err, passing through an Ok untouched.
       #
       # @abstract
       # @yieldparam error [Object] the wrapped error, only for an Err
       # @return [Result] an Err wrapping the block's return value, or +self+ when the receiver is an Ok
-      def map_err; end
+      def map_err
+      end
 
       # @abstract
       # @return [Boolean] true if the result is an Ok
-      def ok?; end
+      def ok?
+      end
 
       # Runs the block for its side effects when the result is an Err.
       #
       # @abstract
       # @yieldparam error [Object] the wrapped error, only for an Err
       # @return [Result] +self+
-      def on_err; end
+      def on_err
+      end
 
       # Runs the block for its side effects when the result is an Ok.
       #
       # @abstract
       # @yieldparam value [Object] the wrapped value, only for an Ok
       # @return [Result] +self+
-      def on_ok; end
+      def on_ok
+      end
 
       # @abstract
       # @return [Hash] the result's variant along with its value or error
-      def to_h; end
+      def to_h
+      end
 
       # Returns the wrapped value, raising when the result is an Err.
       #
       # @abstract
       # @raise [Object] the wrapped error when the result is an Err
       # @return [Object] the wrapped value
-      def unwrap!; end
+      def unwrap!
+      end
 
       # Returns the wrapped error, raising when the result is an Ok.
       #
       # @abstract
       # @raise [ReturnError] when the result is an Ok
       # @return [Object] the wrapped error
-      def unwrap_err!; end
+      def unwrap_err!
+      end
 
       # Returns the wrapped value, falling back to +default+ when the result is an Err.
       #
       # @abstract
       # @param default [Object] the value to return for an Err
       # @return [Object] the wrapped value or +default+
-      def unwrap_or(default); end
+      def unwrap_or(default)
+      end
 
       # Returns the wrapped value, falling back to the block's return value when the result is an Err.
       #
       # @abstract
       # @yieldparam error [Object] the wrapped error, only for an Err
       # @return [Object] the wrapped value or the block's return value
-      def unwrap_or_else; end
+      def unwrap_or_else
+      end
 
       # Implicit hash conversion, which lets a result be splatted into a hash with <tt>**result</tt>.
       #

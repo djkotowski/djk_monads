@@ -142,7 +142,7 @@ Other methods: `some?`, `none?`, `unwrap_or_else { }` and `to_a` (`[value]` for 
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then run `bundle exec rake` to run the specs and RuboCop, which is what CI runs. `bin/console` opens an interactive prompt with the gem loaded.
+After checking out the repo, run `bin/setup` to install dependencies. Then run `bundle exec rake` to run the specs and RuboCop. CI also checks formatting with `bin/stree check`. `bin/console` opens an interactive prompt with the gem loaded.
 
 Formatting uses [Syntax Tree](https://github.com/ruby-syntax-tree/syntax_tree) (`bin/stree write`) and [RuboCop](https://rubocop.org) (`bin/rubocop -a`). A [lefthook](https://github.com/evilmartians/lefthook) pre-commit hook runs both on staged files. Run `bundle exec lefthook install` to enable it.
 

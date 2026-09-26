@@ -1,3 +1,6 @@
+inherit_gem:
+  syntax_tree: config/rubocop.yml
+
 plugins:
   - rubocop-rspec
 
@@ -11,22 +14,3 @@ Metrics:
 
 Style/HashSyntax:
   EnforcedShorthandSyntax: always
-
-Style/Lambda:
-  EnforcedStyle: literal
-
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-
-Style/StringLiteralsInInterpolation:
-  EnforcedStyle: double_quotes
-
-# Match the trailing commas added by Syntax Tree's plugin/trailing_comma.
-Style/TrailingCommaInArguments:
-  EnforcedStyleForMultiline: consistent_comma
-
-Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: consistent_comma
-
-Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: consistent_comma

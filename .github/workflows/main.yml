@@ -28,5 +28,9 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - name: Run the default task
-        run: bundle exec rake
+      - name: Run specs
+        run: bin/rspec
+      - name: Run RuboCop
+        run: bin/rubocop
+      - name: Check Syntax Tree formatting
+        run: bin/stree check Gemfile Rakefile djk_monads.gemspec "lib/**/*.rb" "spec/**/*.rb"

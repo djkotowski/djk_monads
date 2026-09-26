@@ -10,16 +10,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 bin/setup                                        # bundle install
-bundle exec rake                                 # default task: specs + rubocop (what CI runs)
+bundle exec rake                                 # default task: specs + rubocop
 bin/rspec                                        # all specs
 bin/rspec spec/djk/monads/ok_spec.rb             # one file
 bin/rspec spec/djk/monads/ok_spec.rb:42          # one example by line
 bin/rubocop -a                                   # lint with safe autocorrect
 bin/stree write "lib/**/*.rb" "spec/**/*.rb"     # format with Syntax Tree
+bin/stree check "lib/**/*.rb" "spec/**/*.rb"     # check formatting
 bin/console                                      # IRB with the gem loaded
 ```
 
-SimpleCov runs on every spec run (output in `coverage/`). A lefthook pre-commit hook runs `stree write` then `rubocop -a` on staged `.rb`/`.rake` files, so code must satisfy **both** Syntax Tree (print width 120, trailing-comma plugin, no auto-ternary) and RuboCop (double quotes, literal lambdas, shorthand hash syntax always, `Metrics` cops disabled).
+SimpleCov runs on every spec run (output in `coverage/`). A lefthook pre-commit hook runs `stree write` then `rubocop -a` on staged `.rb`/`.rake` files. CI runs `bin/rspec`, `bin/rubocop` and `bin/stree check` as separate steps.
+
+Syntax Tree owns formatting (print width 120, trailing-comma plugin, no auto-ternary). `.rubocop.yml` inherits `syntax_tree`'s RuboCop config, which disables the `Layout` cops and any style cops that would fight the formatter (e.g. empty methods are expanded onto two lines, trailing commas are left to Syntax Tree). Local RuboCop overrides only add `Metrics` disabled and shorthand hash syntax.
 
 ## Architecture
 
