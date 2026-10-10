@@ -140,6 +140,22 @@ Option.none.expect(KeyError.new("no key"))
 
 Other methods: `some?`, `none?`, `unwrap_or_else { }` and `to_a` (`[value]` for a Some, `[]` for None).
 
+### RSpec matchers
+
+The gem ships `be_ok_result` and `be_err_result` matchers. They aren't loaded by `require "djk_monads"`; require them in your `spec_helper.rb`:
+
+```ruby
+require "djk/monads/expectations"
+
+expect(Result.ok(1)).to be_ok_result
+expect(Result.err("boom")).to be_err_result
+
+# Pass a class to also check the wrapped error's type
+expect(Result.err(KeyError.new("no key"))).to be_err_result(KeyError)
+```
+
+The matchers need `rspec-expectations`, which this gem doesn't depend on. Your app must have RSpec in its Gemfile, or requiring them raises a `LoadError`.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then run `bundle exec rake` to run the specs and RuboCop. CI also checks formatting with `bin/stree check`. `bin/console` opens an interactive prompt with the gem loaded.
