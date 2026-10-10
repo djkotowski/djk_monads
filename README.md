@@ -1,4 +1,4 @@
-# DJK Monads [![Tests](https://github.com/djkotowski/djk_monads/actions/workflows/ci.yml/badge.svg)](https://github.com/djkotowski/djk_monads/actions/workflows/ci.yml)
+# DJK Monads [![Tests](https://github.com/djkotowski/djk_monads/actions/workflows/ci.yml/badge.svg)](https://github.com/djkotowski/djk_monads/actions/workflows/ci.yml) [![Gem Version](https://img.shields.io/gem/v/djk_monads)](https://rubygems.org/gems/djk_monads)
 
 Rust-style `Result` and `Option` monads for Ruby.
 
