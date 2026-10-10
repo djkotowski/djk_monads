@@ -13,3 +13,7 @@
 .rspec_status
 
 *.gem
+
+# Local-only Claude Code config
+CLAUDE.local.md
+.claude/**/*.local.*
