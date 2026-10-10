@@ -26,15 +26,19 @@ Syntax Tree owns formatting (print width 120, trailing-comma plugin, no auto-ter
 
 ## Architecture
 
-- `lib/djk.rb` → `lib/djk/monads.rb` loads everything via `require_relative`; new files must be added there.
+- `lib/djk_monads.rb` (Bundler's entry point) → `lib/djk.rb` → `lib/djk/monads.rb` loads everything via `require_relative`; new files must be added there, except the RSpec matchers below.
 - **Result** (`result.rb`) is an abstract base class: it declares every instance method as an empty `@abstract` stub with YARD docs, and holds the class-level constructors/combinators (`ok`, `err`, `from`, `compact`, `partition`, `traverse`) plus shared `to_hash`/`to_s`. **Ok** and **Err** subclass it and implement every abstract method — each method exists on both, with one side being a no-op that returns `self`. When adding a method, add the abstract stub to `Result` and implement it in both `Ok` and `Err`.
 - **Option** (`option.rb`) is a single class, not a subclass pair. It `include`s `Singleton` so `Option.none` is the shared `instance` (value `nil`), while `Option.some` calls the private `new(value:)`. A Some can never wrap `nil`; `Option.from` maps `nil` to None and `map` returns None if the block returns `nil`.
 - Both types support pattern matching via `deconstruct`/`deconstruct_keys` (Result: `in Ok[value]`, `in Err[error:]`).
 - Block-chaining methods (`flat_map`, `flat_map_err`, `or_else`, `traverse`) validate the block's return type and raise `ReturnError` if it isn't the expected monad. `Option#unwrap!` raises `Option::NoneError`; `Err#unwrap!` raises the wrapped error itself.
 - `map` does not flatten nested monads; `flatten` is explicit.
+- **RSpec matchers** (`expectations.rb` → `expectations/result_matchers.rb`) are opt-in: apps load them with `require "djk/monads/expectations"`. Never require them from `monads.rb`, because `rspec-expectations` isn't a runtime dependency.
+- Code inside the gem must use the full `DJK::Monads::` names. The top-level `Result`/`Ok`/`Err` names exist only after an app calls `DJK::Monads.apply_aliases!`. `Err#error` is private, so outside `Err` use `unwrap_err!`.
 
 ## Conventions
 
 - Every public method has YARD docs (`@param`, `@return`, `@yieldparam`, `@raise`, `@example`); match that style.
 - Specs live in `spec/djk/monads/<file>_spec.rb`, wrapped in `module DJK; module Monads` so constants resolve unqualified, using `RSpec.describe` (monkey patching disabled) and `described_class`.
+- Tests for load behavior run in a fresh Ruby process via `Open3` (see `spec/djk_monads_spec.rb` and `expectations_spec.rb`), because the suite has already loaded everything.
+- `rubocop-rspec` allows one expectation per example and at most 5 lines per example. When testing a failure message, catch it in a helper method instead of nesting `expect` calls.
 - `sig/` exists for RBS signatures (`bin/rbs`) but is currently empty.
