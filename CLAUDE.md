@@ -42,3 +42,9 @@ Syntax Tree owns formatting (print width 120, trailing-comma plugin, no auto-ter
 - Tests for load behavior run in a fresh Ruby process via `Open3` (see `spec/djk_monads_spec.rb` and `expectations_spec.rb`), because the suite has already loaded everything.
 - `rubocop-rspec` allows one expectation per example and at most 5 lines per example. When testing a failure message, catch it in a helper method instead of nesting `expect` calls.
 - `sig/` exists for RBS signatures (`bin/rbs`) but is currently empty.
+
+## Releasing
+
+- **Every release must update `CHANGELOG.md`.** In the version bump commit, move the `## [Unreleased]` entries under a new `## [X.Y.Z] - YYYY-MM-DD` heading and leave `## [Unreleased]` empty above it. Don't publish a version that has no entry. If `[Unreleased]` is empty, write the entry from the git log since the last release tag.
+- Bump `lib/djk/monads/version.rb`, run `bundle install` to update `Gemfile.lock`, and commit both with the CHANGELOG as `Bump djk_monads to X.Y.Z`.
+- Publishing (`gem release --tag --push`, configured by `.gem_release.yml`) needs a RubyGems MFA code, so the user runs it. It builds and pushes the gem, then tags and pushes `vX.Y.Z`. Without `--token`, it can't create the GitHub release; then create it with `gh release create vX.Y.Z --verify-tag`, using the CHANGELOG entry as notes.
