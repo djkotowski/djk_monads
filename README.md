@@ -13,10 +13,16 @@ Ruby 4.0 or newer.
 
 ## Installation
 
-The gem hasn't been published to RubyGems yet. Install it from GitHub by adding it to your Gemfile:
+Add it to your Gemfile:
 
 ```ruby
-gem "djk_monads", github: "djkotowski/djk_monads"
+gem "djk_monads"
+```
+
+Or install it directly:
+
+```bash
+gem install djk_monads
 ```
 
 Then require it:
